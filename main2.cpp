@@ -48,8 +48,17 @@ void write_healpix_random_samples(int nside) {
     }
 }
 
+//int main() {
+//    int nside = 1;  // Example nside
+//    write_healpix_random_samples(nside);
+//    return 0;
+//}
+
 int main() {
-    int nside = 1;  // Example nside
+    int nside;
+    std::cout << "Enter the value of nside: ";
+    std::cin >> nside;
+    std::cout << "The number of regions created are (nside * 12 * 12): "<<int(nside)*int(nside)*12<<std::endl;
     write_healpix_random_samples(nside);
     return 0;
 }
