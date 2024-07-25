@@ -22,14 +22,15 @@ std::vector<std::pair<double, double>> generate_random_points(double theta, doub
     return points;
 }
 
-void write_healpix_random_samples(int nside) {
+void write_healpix_random_samples(int nside, float step_size, int num_points) {
     long npix = 12 * nside * nside;
     Healpix_Base healpix_base(nside, RING, SET_NSIDE);
     double pixel_size = std::sqrt(4 * M_PI / npix);  // Approximate size of each pixel
+    std::cout <<"Pixel size :"<<pixel_size<<std::endl;
 
     for (long pix = 0; pix < npix; ++pix) {
         pointing ptg = healpix_base.pix2ang(pix);
-        auto samples = generate_random_points(ptg.theta, ptg.phi, pixel_size / 2.0, 500);  // Generate 100 random samples within bounds
+        auto samples = generate_random_points(ptg.theta, ptg.phi, step_size, num_points);  // Generate 100 random samples within bounds
 
         std::stringstream filename;
         filename << "healpix_data_" << pix << ".txt";
@@ -56,9 +57,15 @@ void write_healpix_random_samples(int nside) {
 
 int main() {
     int nside;
-    std::cout << "Enter the value of nside: ";
+    float ang_step_size;
+    int num_points;
+    std::cout << "Enter the value of nside (1): ";
     std::cin >> nside;
+    std::cout << "Enter the value of step size (1): ";
+    std::cin >> ang_step_size;
+    std::cout << "Enter the value of npoints (100): ";
+    std::cin >> num_points;
     std::cout << "The number of regions created are (nside * 12 * 12): "<<int(nside)*int(nside)*12<<std::endl;
-    write_healpix_random_samples(nside);
+    write_healpix_random_samples(nside, ang_step_size, num_points);
     return 0;
 }
