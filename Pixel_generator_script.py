@@ -55,6 +55,8 @@ def getPoints(arc12, arc23, arc34, arc41, num_points = 50):
     for i in range(num_points):
         arc = great_circle_arc(arc23[i], arc41[num_points -1 - i])
         new_points.extend(arc)
+        
+    return np.array(new_points)
 
 def main():
     order = int(input("Order: "))
@@ -83,7 +85,6 @@ def main():
         #Plot Boundary points
         ax.scatter(points[0], points[1], points[2], c='red', s=25)
     
-    
         
         #Get Arc Values
         arc12, arc23, arc34, arc41 = getArcs(points)
@@ -93,10 +94,10 @@ def main():
         ax.scatter(arc34[:, 0], arc34[:, 1], arc34[:, 2], color='blue', s =2)
         ax.scatter(arc41[:, 0], arc41[:, 1], arc41[:, 2], color='blue', s = 2)
 
-        
         #Get Values in Pixel
         new_points= getPoints(arc12, arc23, arc34, arc41)
         #Plot Values in pixel
+  
         ax.scatter(new_points[:,0], new_points[:,1], new_points[:,2], c=np.random.rand(3,), s=1)
        
     print(np.shape(new_points))
